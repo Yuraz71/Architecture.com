@@ -9,13 +9,13 @@ import csv
 
 class ArchitectPipeline(object):
     def open_spider(self, ArchSpider):
-        self.csvfile = open("./files/architect2.csv", 'wt', encoding="UTF-8")
+        self.csvfile = open("./files/architect.csv", 'wt', encoding="UTF-8")
         self.writer = csv.writer(self.csvfile)
         
     def close_spider(self, ArchSpider):
         self.csvfile.close()
         
     def process_item(self, architect, ArchSpider):
-        self.writer.writerow((architect['name_arch'], architect['address'], architect['town'], architect['county'], architect['postcode'], architect['phone'], architect['email'], architect['webb'], architect['about']))
-        architect['name_arch']=architect['address']=architect['town']=architect['county']=architect['postcode']=architect['phone']=architect['email']=architect['webb']=architect['about']=''
+        self.writer.writerow((architect['name_arch'], architect['address'], architect['phone'], architect['webb'], architect['about']))
+        architect['name_arch']=architect['address']=architect['phone']=architect['webb']=architect['about'] = ''
         return architect
