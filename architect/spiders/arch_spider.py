@@ -4,14 +4,15 @@ from scrapy.spiders import CrawlSpider
 import re
 
 class ArchSpider(CrawlSpider):
+    # Tiny scraper for find-an-architect.architecture.com site
+    # Scrape architect names, address,phone, website and about from all pages
     name = 'arch'
 
     allowed_domains = ['find-an-architect.architecture.com']
     start_urls = ['https://find-an-architect.architecture.com/FAAPractices.aspx?page=1', ]
 
     def parse(self, response):
-        # Organize cycle for items
-        # Each item in block starting with 'article'
+        # Loop for items
         for sel in response.css('article'):
             architect = items.ArchitectItem()
             architect['name_arch'] = sel.css('a::text').extract_first().strip()
@@ -35,7 +36,7 @@ class ArchSpider(CrawlSpider):
 
             yield architect
 
-        # goto next page
+        # Request next page
         try:
             next_page = response.xpath("//span[@class='sys_navigationnext']/a/@href").extract()[0]
             next_page = 'https://find-an-architect.architecture.com' + next_page
